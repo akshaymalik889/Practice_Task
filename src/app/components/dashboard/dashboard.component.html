@@ -1,0 +1,65 @@
+
+
+
+<div>
+    <label for="country">Search by Country:</label>
+    <input
+      id="country"
+      type="text"
+      [(ngModel)]="searchCountry"
+      (input)="filterByCountry()"
+      placeholder="search your desired country"
+      />
+
+      <div >
+        <label for="state">select state</label>
+        <select id="state" [(ngModel)]="selectedStates" (change)="filterByState()">
+          <option value="">All States</option>
+          <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+        </select>
+      </div>    
+
+      <!-- show all data -->
+      <div *ngIf="movieData.length > 0 && emptyInputField; else noData">
+
+        <mat-card *ngFor="let data of movieData" appearance="outlined">
+            <mat-card-content>
+                <h3>{{ data.name }}</h3>
+                <h3>Country:{{ data.country }}</h3>
+                <h3>Alpha Code: {{ data.alpha_two_code }}</h3>
+                <h3>State: {{ data.state_Province }}</h3>
+                <h2>
+                  <h3>Web Page:</h3>
+                  <a href="https://{{data.domains[0]}}" target="_blank">{{ data.domains[0] }}</a>
+                </h2>
+            
+                <button onclick="downloadImage">Download</button>
+            </mat-card-content>
+        </mat-card>
+    </div>
+      <!-- show all data -->
+
+<div *ngIf="filteredData.length > 0 && emptyInputField == false; else noData">
+
+    <mat-card *ngFor="let data of filteredData" appearance="outlined">
+        <mat-card-content>
+            <h3>{{ data.name }}</h3>
+            <h3>Country:{{ data.country }}</h3>
+            <h3>Alpha Code: {{ data.alpha_two_code }}</h3>
+            <h3>State: {{ data.state_Province }}</h3>
+            <h2>
+              <h3>Web Page:</h3>
+              <a href="https://{{data.domains[0]}}" target="_blank">{{ data.domains[0] }}</a>
+            </h2>
+        
+            <button onclick="downloadImage">Download</button>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+    <ng-template #noData>
+      <p>No Country found</p>
+    </ng-template>
+
+</div>
+  
